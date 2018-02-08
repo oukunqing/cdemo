@@ -1,12 +1,11 @@
-makefile:
-	objects = define.o hello.o common.o
-	define: $(objects)
-		gcc -o define$(objects)
-	define.o: define.c hello.h common.h
-		gcc -C define.c
-	hello.o: hello.c hello.h
-		gcc -C hello.c
-	common.o: common.c common.h
-		gcc -C common.c
-	clean:
-		rm define$(objects)
+objects = main.o hello.o common.o
+helloworld.out: $(objects)
+	gcc -o helloworld.out $(objects)
+	rm $(objects)
+main.o: hello.h common.h
+hello.o: hello.h
+common.o: common.h
+clear:
+	rm $(objects)
+clean:
+	rm helloworld.out $(objects)
