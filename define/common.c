@@ -92,3 +92,9 @@ bool exists(char s[], char keys[][16], int keys_len)
 	}
 	return false;
 }
+
+void parse_message(char s[], struct Message msg)
+{
+	printf("parse_message: %s\n", s);
+	
+}
