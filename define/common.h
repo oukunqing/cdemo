@@ -11,10 +11,10 @@ struct ConfigKey
 
 struct Message
 {
-	char CN[4];
-	char MN[32];
-	char PW[6];
 	char QN[20];
+	char MN[32];
+	char CN[4];
+	char PW[6];
 	char Crc[4];
 	char Flag[1];
 	char CP[960];
@@ -30,4 +30,8 @@ void parse_config(char s[], char keys[][16], int keys_len, struct ConfigKey kvs[
 
 bool exists(char s[], char keys[][16], int keys_len);
 
-void parse_message(char s[], struct Message msg);
+void parse_message(char s[], struct Message *msg);
+
+void push_message(char val[], char key[], struct Message *msg);
+
+void split_message (char s[], char con[]);

@@ -7,7 +7,6 @@
 #define bool int
 #define true 1
 #define false 0
-
 bool equals(char s[], char s1[])
 {
 	int len = strlen(s);
@@ -32,26 +31,26 @@ int main(int argc, char *argv[])
 	int num = 9021;
 	if(num == RegisterCN)
 	{
-		printf("Êý×ÖÏàµÈ\n");
+		printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\n");
 	}
 	char cn[] = {"90210"};
 	printf("%s\n", cn);
 	
 	if(0 == strcmp(cn,CN))
 	{
-		printf("×Ö·û´®ÏàµÈ\n");
+		printf("ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\n");
 	}
 	
 	bool result = equals(cn, CN);
 
 	printf("equals result: %d\n", result);
 
-	printf("ÇëÊäÈëÁ½¸ö×Ö·û´®£º\n");
+	printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½\n");
 	char s[100], s1[100];
 	scanf("%s%s", &s, &s1);
 
 	printf("%s %s\n", s, s1);
-	printf("ÊÇ·ñÏàµÈ: %d\n", equals(s, s1));
+	printf("ï¿½Ç·ï¿½ï¿½ï¿½ï¿½: %d\n", equals(s, s1));
 
 	getchar();
 	return 0;

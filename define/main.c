@@ -2,6 +2,7 @@
 #include "string.h"
 #include "hello.h"
 #include "common.h"
+#include "config.h"
 
 int main(int argc, char *argv[])
 {
@@ -32,6 +33,14 @@ int main(int argc, char *argv[])
 	{
 		printf("Data %d: %s = %s\n", i, kvs[i].key, kvs[i].val);
 	}
+
+	char message[1024] = "##0032QN=12345;MN=72001;CN=9021;Flag=1A2B3\n";
+	struct Message msg;
+	parse_message(message, &msg);
+
+	printf("msg: QN=%s, MN=%s, CN=%s, Flag=%s\n", msg.QN, msg.MN, msg.CN, msg.Flag);
+
+	save_config(kvs);
 
 	getchar();
 	return 0;
