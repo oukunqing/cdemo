@@ -105,15 +105,21 @@ void parse_message(char s[], struct Message *msg)
 	bool isVal = false;
 	int i = 0, m = 0;
 	int len = strlen(con) + 1;
+	bool isCP = false;
+	bool success = false;
 	printf("con len: %d\n", len);
 
 	for(m = 0; m < len; m++)
 	{
 		char _con = con[m];
 
-		if('=' == _con)
+		if('=' == _con && !isCP)
 		{
 			isVal = true;
+			if(equals(key, "CP"))
+			{
+				isCP = true;
+			}
 			i = 0;
 		}
 		else if(!isVal)
@@ -123,12 +129,16 @@ void parse_message(char s[], struct Message *msg)
 		}
 		else
 		{
-			if(';' == _con || m >= len - 1)
+			if((!isCP && ';' == _con) || m >= len - 1)
 			{
 				printf("key: %s, val: %s\n", key, val);
 				i = 0;
 				
-				push_message(val, key, msg);
+				push_message(val, key, msg, &success);
+				if(!success)
+				{
+					printf("%s parse failed.\n", key);
+				}
 
 				clear_array(key, 16);
 				clear_array(val, 960);
@@ -141,10 +151,15 @@ void parse_message(char s[], struct Message *msg)
 			}
 		}
 	}
+
+	//printf("msg: QN=%s, MN=%s, CN=%s, Flag=%s, PW=%s, CP=%s\n", (*msg).QN, (*msg).MN, (*msg).CN, (*msg).Flag, (*msg).PW, (*msg).CP);
+
 }
 
-void push_message(char val[], char key[], struct Message *msg)
+void push_message(char val[], char key[], struct Message *msg, bool *success)
 {
+	*success = true;
+
 	if(equals(key, "QN"))
 	{
 		strcpy((*msg).QN, val);
@@ -157,9 +172,48 @@ void push_message(char val[], char key[], struct Message *msg)
 	{
 		strcpy((*msg).CN, val);
 	}
-	else if(equals(key, "Flag"))
+	else if(equals(key, "PW")) 
+	{
+		strcpy((*msg).PW, val);
+	}
+	else if(equals(key, "Flag")) 
 	{
 		strcpy((*msg).Flag, val);
+	}
+	else if(equals(key, "CP")) 
+	{
+		char con[960] = {0};
+		parse_content(val, con, success);
+		if(success)
+		{
+			strcpy((*msg).CP, con);
+		}
+	}
+}
+
+void parse_content(char s[], char con[], bool *success)
+{
+	int i = 0, m = 0;
+	int len = strlen(s);
+	*success = true;
+	while(*s)
+	{
+		char c = *s;
+		if(i >= 2 && i < len - 2)
+		{
+			con[m] = c;
+			m++;
+		}
+		else if(i < len - 1)
+		{
+			if(c != '&')
+			{
+				*success = false;
+				break;
+			}
+		}
+		i++;
+		++s;
 	}
 }
 
@@ -174,7 +228,6 @@ void split_message (char s[], char con[])
 	int LENGTH_NUMBER = 4;
 
 	char num[5] = {0};
-	//char con[1024] = {0};
 	char crc[5] = {0};
 
 	while(*s)
@@ -223,4 +276,27 @@ void split_message (char s[], char con[])
 	printf("num: %s\n", num);
 	printf("con: %s\n", con);	
 	printf("crc: %s\n", crc);
+}
+
+void build_message(struct Message msg, char con[1024])
+{
+	/*
+	//char data[][64] = { "##", "QN=", msg.QN, ";", "MN=", msg.MN, ";"};
+	struct ContentKey cons[] = {
+		{"QN", &msg.QN}
+	};
+
+	char data[][64] = { "##", "QN=", "MN=", ";"};
+	int len = sizeof(data) / sizeof(data[0]);
+	int i;
+	for(i = 0; i < len; i++)
+	{
+		strncat(con, data[i], strlen(data[i]));
+	}*/
+	strncat(con, "QN=", 3);
+	strncat(con, msg.QN, strlen(msg.QN));
+	strncat(con, ";", 1);
+	strncat(con, "MN=", 3);
+	strncat(con, msg.MN, strlen(msg.MN));
+	strncat(con, ";", 1);
 }

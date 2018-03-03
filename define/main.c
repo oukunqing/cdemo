@@ -34,12 +34,15 @@ int main(int argc, char *argv[])
 		printf("Data %d: %s = %s\n", i, kvs[i].key, kvs[i].val);
 	}
 
-	char message[1024] = "##0032QN=12345;MN=72001;CN=9021;Flag=1A2B3\n";
+	char message[1024] = "##0087QN=12345;MN=72001;CN=9021;Flag=1;PW=123456;CP=&&Ip=122.227.179.90;Port=23473;Id=72002&&4035\n";
 	struct Message msg;
 	parse_message(message, &msg);
 
-	printf("msg: QN=%s, MN=%s, CN=%s, Flag=%s\n", msg.QN, msg.MN, msg.CN, msg.Flag);
+	printf("msg: QN=%s, MN=%s, CN=%s, Flag=%s, PW=%s, CP=%s\n", msg.QN, msg.MN, msg.CN, msg.Flag, msg.PW, msg.CP);
 
+	char build_con[1024];
+	build_message(msg, build_con);
+	printf("build msg: %s\n", build_con);
 	save_config(kvs);
 
 	getchar();

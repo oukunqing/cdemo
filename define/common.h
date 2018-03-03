@@ -6,18 +6,24 @@
 struct ConfigKey
 {
 	char key[16];
-	char val[64];
+	char val[960];
+};
+
+struct ContentKey
+{
+	char key[16];
+	char con[64];
 };
 
 struct Message
 {
 	char QN[20];
 	char MN[32];
-	char CN[4];
-	char PW[6];
-	char Crc[4];
-	char Flag[1];
+	char CN[5];
+	char PW[7];
+	char Flag[2];
 	char CP[960];
+	char Crc[5];
 };
 
 int add(int i, int j);
@@ -32,6 +38,10 @@ bool exists(char s[], char keys[][16], int keys_len);
 
 void parse_message(char s[], struct Message *msg);
 
-void push_message(char val[], char key[], struct Message *msg);
+void push_message(char val[], char key[], struct Message *msg, bool *success);
 
 void split_message (char s[], char con[]);
+
+void parse_content(char s[], char con[], bool *success);
+
+void build_message(struct Message msg, char con[]);
