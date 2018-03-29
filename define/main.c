@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 {
 	char s[100], s1[100];
 	printf("Please input tow char:\n");
-	scanf("%s%s", &s, &s1);
+	scanf("%s%s", s, s1);
 	printf("Your input is %s and %s \n", s, s1);
 	bool result = equals(s, s1);
 	printf("equals result: %d\n", result);
@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
 
 	printf("msg: QN=%s, MN=%s, CN=%s, Flag=%s, PW=%s, CP=%s\n", msg.QN, msg.MN, msg.CN, msg.Flag, msg.PW, msg.CP);
 
-	char build_con[1024];
+	char build_con[1024] = {0};
 	build_message(msg, build_con);
 	printf("build msg: %s\n", build_con);
 	save_config(kvs);
