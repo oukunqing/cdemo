@@ -46,5 +46,6 @@ int main(int argc, char *argv[])
 	save_config(kvs);
 
 	getchar();
+	getchar();
 	return 0;
 }
