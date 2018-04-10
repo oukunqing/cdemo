@@ -41,7 +41,8 @@ int main(int argc, char *argv[])
 	printf("msg: QN=%s, MN=%s, CN=%s, Flag=%s, PW=%s, CP=%s\n", msg.QN, msg.MN, msg.CN, msg.Flag, msg.PW, msg.CP);
 
 	char build_con[1024] = {0};
-	build_message(msg, build_con);
+	strcpy(msg.CN, "9022");
+	build_message(msg, build_con, true);
 	printf("build msg: %s\n", build_con);
 	save_config(kvs);
 

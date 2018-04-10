@@ -278,7 +278,27 @@ void split_message (char s[], char con[])
 	printf("crc: %s\n", crc);
 }
 
-void build_message(struct Message msg, char con[1024])
+void build_key_value(char con[], char key[], char prefix[], char val[])
+{
+	strncat(con, key, strlen(key));
+	char symbol[4] = {0}, endSymbol[3] = {0};
+	if(!equals(key, "CP"))
+	{
+		strcpy(symbol, "=");
+		strcpy(endSymbol, ";");
+	}
+	else
+	{
+		strcpy(symbol, "=&&");
+		strcpy(endSymbol, "&&");
+	}
+	strncat(con, symbol, strlen(symbol));
+	strncat(con, prefix, strlen(prefix));
+	strncat(con, val, strlen(val));
+	strncat(con, endSymbol, strlen(endSymbol));
+}
+
+void build_message(struct Message msg, char con[1024], bool response)
 {
 	/*
 	//char data[][64] = { "##", "QN=", msg.QN, ";", "MN=", msg.MN, ";"};
@@ -293,10 +313,17 @@ void build_message(struct Message msg, char con[1024])
 	{
 		strncat(con, data[i], strlen(data[i]));
 	}*/
-	strncat(con, "QN=", 3);
-	strncat(con, msg.QN, strlen(msg.QN));
-	strncat(con, ";", 1);
-	strncat(con, "MN=", 3);
-	strncat(con, msg.MN, strlen(msg.MN));
-	strncat(con, ";", 1);
+
+	char QN[22] = {0};
+	build_key_value(QN, "QN", "", msg.QN);
+
+	if(!response)
+	{
+		strncat(con, QN, strlen(QN));
+	}
+	build_key_value(con, "MN", "", msg.MN);
+	build_key_value(con, "CN", "", msg.CN);
+	build_key_value(con, "PW", "", msg.PW);
+	build_key_value(con, "Flag", "", msg.Flag);
+	build_key_value(con, "CP", response ? QN : "", msg.CP);
 }

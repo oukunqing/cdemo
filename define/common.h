@@ -44,4 +44,6 @@ void split_message (char s[], char con[]);
 
 void parse_content(char s[], char con[], bool *success);
 
-void build_message(struct Message msg, char con[]);
+void build_key_value(char con[], char key[], char prefix[], char val[]);
+
+void build_message(struct Message msg, char con[], bool response);
