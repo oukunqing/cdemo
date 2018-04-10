@@ -29,9 +29,10 @@ int main(int argc, char *argv[])
 
 	parse_config(config, keys, keys_len, kvs);
 
-	for(int i=0; i<keys_len; i++)
+	int m = 0;
+	for(m = 0; m < keys_len; m++)
 	{
-		printf("Data %d: %s = %s\n", i, kvs[i].key, kvs[i].val);
+		printf("Data %d: %s = %s\n", m, kvs[m].key, kvs[m].val);
 	}
 
 	char message[1024] = "##0087QN=12345;MN=72001;CN=9021;Flag=1;PW=123456;CP=&&Ip=122.227.179.90;Port=23473;Id=72002&&4035\n";

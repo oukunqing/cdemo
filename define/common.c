@@ -29,7 +29,8 @@ bool equals(char s[], char s1[])
 
 void clear_array(char s[], int len)
 {
-	for(int i=0; i<len; i++)
+	int i = 0;
+	for(i = 0; i < len; i++)
 	{
 		s[i] = 0;
 	}
@@ -84,7 +85,8 @@ void parse_config(char s[], char keys[][16], int keys_len, struct ConfigKey kvs[
 
 bool exists(char s[], char keys[][16], int keys_len)
 {
-	for(int i=0; i<keys_len; i++)
+	int i = 0;
+	for(i = 0; i < keys_len; i++)
 	{
 		if(equals(s, keys[i]))
 		{
