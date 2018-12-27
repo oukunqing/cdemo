@@ -4,8 +4,12 @@
 #include "common.h"
 #include "config.h"
 
+#define Max(a, b) ((a) > (b) ? (a) : (b))
+
 int main(int argc, char *argv[])
 {
+
+	printf("Max: %d\n", Max(1+2, 5-1));
 	char s[100], s1[100];
 	printf("Please input tow char:\n");
 	scanf("%s%s", s, s1);
@@ -47,7 +51,14 @@ int main(int argc, char *argv[])
 	printf("build msg: %s\n", build_con);
 	save_config(kvs);
 
+	int num = 0x12345678;
+	printf("[0]:0x%x -> %p\n", *((char*)&num+0), &num+0);
+	printf("[1]:0x%x -> %p\n", *((char*)&num+1), &num+1);
+	printf("[2]:0x%x -> %p\n", *((char*)&num+2), &num+2);
+	printf("[3]:0x%x -> %p\n", *((char*)&num+3), &num+3);
+
 	getchar();
 	getchar();
+
 	return 0;
 }
