@@ -1,4 +1,5 @@
 #include "stdio.h"
+#include "stdlib.h"
 #include "string.h"
 #include "hello.h"
 #include "common.h"
@@ -18,6 +19,14 @@ int main(int argc, char *argv[])
 	printf("equals result: %d\n", result);
 	
 	hello("Tom");
+	
+	char *p = (char *)malloc(100);
+	strcpy(p, "hello");
+	printf("%s\n", p);
+	free(p);
+
+	
+
 	int i = 2, j = 3;
 	printf("%d + %d = %d\n", i, j, add(i, j));
 
