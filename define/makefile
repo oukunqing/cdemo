@@ -1,15 +1,14 @@
 cc = gcc
 objects = main.o hello.o common.o config.o
-helloworld.exe: $(objects) 
-	$(cc) -o helloworld.exe $(objects)
-	del *.o
-	cls
-	helloworld.exe
-main.o: main.c hello.h common.h
-	$(cc) -c main.c
-hello.o: hello.c hello.h  
-	$(cc) -c hello.c
-common.o: common.c common.h
-	$(cc) -c common.c
-config.o: config.c config.h
-	$(cc) -c config.c
+hello: $(objects)
+	cc -o hello $(objects)
+	rm $(objects)
+	./hello
+main.o: hello.h common.h
+hello.o: hello.h
+common.o: common.h
+config.o: config.h
+clear:
+	rm $(objects)
+clean:
+	rm hello $(objects)

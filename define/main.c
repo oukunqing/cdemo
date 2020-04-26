@@ -67,7 +67,6 @@ int main(int argc, char *argv[])
 	printf("[3]:0x%x -> %p\n", *((char*)&num+3), &num+3);
 
 	getchar();
-	getchar();
 
 	return 0;
 }
